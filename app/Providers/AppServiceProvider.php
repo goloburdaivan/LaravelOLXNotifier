@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\PriceParsingService;
 use App\Services\SubscriptionService;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(SubscriptionService::class, function ($app) {
             return new SubscriptionService();
+        });
+
+        $this->app->bind(PriceParsingService::class, function ($app) {
+            return new PriceParsingService();
         });
     }
 

@@ -14,13 +14,14 @@ class SubscriptionService
             'email' => $email
         ]);
 
+        $product = Product::firstOrCreate(['url' => $productUrl, 'price' => app(PriceParsingService::class)->getPrice($productUrl)]);
+
         if ($subscription->wasRecentlyCreated) {
             Mail::to($subscription->email)->send(new ConfirmationMail(route('mail.confirm', [
                 'confirmationToken' => $subscription->confirmation_token
             ])));
         }
 
-        $product = Product::firstOrCreate(['url' => $productUrl]);
         if (!$subscription->products()->where('product_id', $product->id)->exists()) {
             $subscription->products()->attach($product->id);
         }
