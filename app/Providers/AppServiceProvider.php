@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Jobs\NotifySubscribersJob;
 use App\Services\PriceParsingService;
 use App\Services\SubscriptionService;
 use Illuminate\Support\ServiceProvider;

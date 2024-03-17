@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\NotifySubscribersJob;
 use App\Models\Product;
-use App\Services\PriceParsingService;
 use Illuminate\Console\Command;
 
 class SubscriptionNotifier extends Command
@@ -13,27 +13,23 @@ class SubscriptionNotifier extends Command
      *
      * @var string
      */
-    protected $signature = 'app:subscription-notifier';
+    protected $signature = 'subscriptions:notify';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Notify all subscribers about price changings';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $products = Product::all();
         foreach ($products as $product) {
-            $price = app(PriceParsingService::class)->getPrice($product->url);
-            if ($price != $product->price) {
-                error_log("------ Product {$product->url}");
-                $product->notifyAll($price);
-            }
+            NotifySubscribersJob::dispatch($product);
         }
     }
 }

@@ -1,0 +1,99 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Subscription API",
+        "description": "API for subscribing to product updates",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/subscribe": {
+            "post": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Subscribe to product updates",
+                "description": "Subscribe to receive updates about product prices",
+                "operationId": "2730a10456272c98d9f63b38dc37638c",
+                "requestBody": {
+                    "description": "Subscription data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "url"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Subscriber's email address",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "url": {
+                                        "description": "URL of the product page",
+                                        "type": "string",
+                                        "format": "url"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Indicates if the subscription was successful",
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "description": "Success message",
+                                            "type": "string",
+                                            "example": "Subscribed new product for user"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "403": {
+                        "description": "Success response, but email not confirmed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Indicates if the subscription was successful",
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "description": "Success message",
+                                            "type": "string",
+                                            "example": "Confirm your email before receiving subscription messages"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

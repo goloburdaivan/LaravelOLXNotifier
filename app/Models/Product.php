@@ -6,6 +6,7 @@ use App\Mail\PriceNotificationMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class Product extends Model
@@ -23,7 +24,7 @@ class Product extends Model
     public function notifyAll(int $price) : void {
         $users = $this->subscriptions()->where('confirmed', true)->get();
         foreach ($users as $user) {
-            error_log("Notifying {$user->email}");
+            Log::info("Notifying {$user->email}");
             Mail::to($user->email)->send(new PriceNotificationMail($price));
         }
     }
