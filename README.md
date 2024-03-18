@@ -19,8 +19,7 @@
 
 1. Зклонуйте репозиторій:
    ```bash
-   git clone 
-https://github.com/goloburdaivan/LaravelOLXNotifier
+   git clone https://github.com/goloburdaivan/LaravelOLXNotifier
 2. Встановіть залежності за допомогою Composer
     ```bash
    composer install
